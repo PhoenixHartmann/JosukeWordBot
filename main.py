@@ -18,17 +18,28 @@ dp = Dispatcher()
 # Список запрещенных слов
 FORBIDDEN_WORDS = ['хуй', 'пример', 'плохое_слово3']
 
+from asyncio import sleep
+
 async def check_forbidden_words(message: types.Message):
     if message.text:
         text_lower = message.text.lower()
         for word in FORBIDDEN_WORDS:
             if word.lower() in text_lower:
-                animation = FSInputFile("josuke_angry.gif")
-                await message.reply_animation(
-                    animation,
-                    caption="Пред\nЧто ты сказал про мою прическу?"
-                )
-                return
+                while True:
+                    try:
+                        animation = FSInputFile("josuke_angry.gif")
+                        await message.reply_animation(
+                            animation,
+                            caption="Пред\nЧто ты сказал про мою прическу?"
+                        )
+                        return
+                    except Exception as e:
+                        if "retry after" in str(e).lower():
+                            retry_after = int(str(e).split("retry after")[1].split()[0])
+                            await sleep(retry_after)
+                        else:
+                            logging.error(f"Error sending message: {e}")
+                            return
 
 @dp.message()
 async def check_message(message: types.Message):
