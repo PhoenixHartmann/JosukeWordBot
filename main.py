@@ -37,7 +37,6 @@ async def check_message(message: types.Message):
             if word.lower() in text_lower:
                 await message.reply("Пред\nЗапретка")
                 return
-        await message.answer(message.text)
 
 async def main():
     keep_alive()
