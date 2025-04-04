@@ -30,8 +30,7 @@ async def cats(message: types.Message):
     with open('data/cats.jpg', 'rb') as photo:
         await message.reply_photo(photo, caption='Cats are here 😺')
 
-@dp.message()
-async def check_message(message: types.Message):
+async def check_forbidden_words(message: types.Message):
     if message.text:
         text_lower = message.text.lower()
         for word in FORBIDDEN_WORDS:
@@ -42,6 +41,14 @@ async def check_message(message: types.Message):
                     caption="Пред\nЧто ты сказал про мою прическу?"
                 )
                 return
+
+@dp.message()
+async def check_message(message: types.Message):
+    await check_forbidden_words(message)
+
+@dp.edited_message()
+async def check_edited_message(message: types.Message):
+    await check_forbidden_words(message)
 
 async def main():
     keep_alive()
