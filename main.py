@@ -1,8 +1,7 @@
-
 import logging
 import asyncio
 from background import keep_alive
-from aiogram import Bot, Dispatcher, types, F
+from aiogram import Bot, Dispatcher, types, F, FSInputFile
 from aiogram.filters import Command, CommandStart
 
 API_TOKEN = '7963543492:AAEh2tnLbplI5bNN2CnLQYPhBpJ50mVf0_0'
@@ -35,7 +34,11 @@ async def check_message(message: types.Message):
         text_lower = message.text.lower()
         for word in FORBIDDEN_WORDS:
             if word.lower() in text_lower:
-                await message.reply("Пред\nЧто ты сказал про мою прическу?")
+                animation = FSInputFile("josuke_angry.webp")
+                await message.reply_animation(
+                    animation,
+                    caption="Пред\nЧто ты сказал про мою прическу?"
+                )
                 return
 
 async def main():
