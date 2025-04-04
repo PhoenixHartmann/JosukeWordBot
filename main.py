@@ -35,11 +35,7 @@ async def check_message(message: types.Message):
         text_lower = message.text.lower()
         for word in FORBIDDEN_WORDS:
             if word.lower() in text_lower:
-                with open('josuke_angry.webp', 'rb') as animation:
-                    await message.reply_animation(
-                        animation,
-                        caption="Пред\nЧто ты сказал про мою прическу?"
-                    )
+                await message.reply("Пред\nЧто ты сказал про мою прическу?")
                 return
 
 async def main():
