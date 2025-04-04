@@ -15,7 +15,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
 # Список запрещенных слов
-FORBIDDEN_WORDS = ['плохое_слово1', 'плохое_слово2', 'плохое_слово3']
+FORBIDDEN_WORDS = ['хуй', 'пример', 'плохое_слово3']
 
 @dp.message(Command(commands=['start', 'help']))
 async def send_welcome(message: types.Message):
