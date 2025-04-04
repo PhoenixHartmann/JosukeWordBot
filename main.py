@@ -2,7 +2,8 @@ import logging
 import asyncio
 from background import keep_alive
 from aiogram import Bot, Dispatcher, types
-from aiogram.filters import Command, CommandStart, Text
+from aiogram.filters import Command, CommandStart
+from aiogram.filters.text import Text
 
 API_TOKEN = '7963543492:AAEh2tnLbplI5bNN2CnLQYPhBpJ50mVf0_0'
 
