@@ -1,9 +1,8 @@
 import logging
 import asyncio
 from background import keep_alive
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command, CommandStart
-from aiogram.filters import Text
 
 API_TOKEN = '7963543492:AAEh2tnLbplI5bNN2CnLQYPhBpJ50mVf0_0'
 
@@ -23,7 +22,7 @@ async def send_welcome(message: types.Message):
     await message.reply("Hi!\nI'm EchoBot!\nPowered by aiogram.")
 
 
-@dp.message(Text(regexp='(^cat[s]?$|puss)'))
+@dp.message(F.text.regexp(r'(^cat[s]?$|puss)'))
 async def cats(message: types.Message):
     with open('data/cats.jpg', 'rb') as photo:
         await message.reply_photo(photo, caption='Cats are here 😺')
