@@ -27,8 +27,11 @@ async def check_forbidden_words(message: types.Message):
             if word.lower() in text_lower:
                 while True:
                     try:
+                        # Delete the message with forbidden word
+                        await message.delete()
+                        # Send warning with animation
                         animation = FSInputFile("josuke_angry.gif")
-                        await message.reply_animation(
+                        await message.answer_animation(
                             animation,
                             caption="Пред\nЧто ты сказал про мою прическу?"
                         )
