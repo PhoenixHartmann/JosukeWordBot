@@ -31,10 +31,12 @@ async def check_forbidden_words(message: types.Message):
                         await message.delete()
                         # Send warning with animation
                         animation = FSInputFile("josuke_angry.gif")
-                        await message.answer_animation(
+                        warning_msg = await message.answer_animation(
                             animation,
                             caption="Пред\nЧто ты сказал про мою прическу?"
                         )
+                        await asyncio.sleep(10)
+                        await warning_msg.delete()
                         return
                     except Exception as e:
                         if "retry after" in str(e).lower():
