@@ -18,18 +18,6 @@ dp = Dispatcher()
 # Список запрещенных слов
 FORBIDDEN_WORDS = ['хуй', 'пример', 'плохое_слово3']
 
-@dp.message(Command(commands=['start', 'help']))
-async def send_welcome(message: types.Message):
-    """
-    This handler will be called when user sends `/start` or `/help` command
-    """
-    await message.reply("Hi!\nI'm EchoBot!\nPowered by aiogram.")
-
-@dp.message(F.text.regexp(r'(^cat[s]?$|puss)'))
-async def cats(message: types.Message):
-    with open('data/cats.jpg', 'rb') as photo:
-        await message.reply_photo(photo, caption='Cats are here 😺')
-
 async def check_forbidden_words(message: types.Message):
     if message.text:
         text_lower = message.text.lower()
