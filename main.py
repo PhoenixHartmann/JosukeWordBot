@@ -35,7 +35,7 @@ async def check_message(message: types.Message):
         text_lower = message.text.lower()
         for word in FORBIDDEN_WORDS:
             if word.lower() in text_lower:
-                await message.reply("Пред\nЗапретка")
+                await message.reply("Пред\nЧто ты сказал про мою прическу?")
                 return
 
 async def main():
