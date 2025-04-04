@@ -1,3 +1,4 @@
+
 import logging
 import asyncio
 from background import keep_alive
@@ -13,6 +14,8 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
+# Список запрещенных слов
+FORBIDDEN_WORDS = ['плохое_слово1', 'плохое_слово2', 'плохое_слово3']
 
 @dp.message(Command(commands=['start', 'help']))
 async def send_welcome(message: types.Message):
@@ -21,17 +24,20 @@ async def send_welcome(message: types.Message):
     """
     await message.reply("Hi!\nI'm EchoBot!\nPowered by aiogram.")
 
-
 @dp.message(F.text.regexp(r'(^cat[s]?$|puss)'))
 async def cats(message: types.Message):
     with open('data/cats.jpg', 'rb') as photo:
         await message.reply_photo(photo, caption='Cats are here 😺')
 
-
 @dp.message()
-async def echo(message: types.Message):
-    await message.answer(message.text)
-
+async def check_message(message: types.Message):
+    if message.text:
+        text_lower = message.text.lower()
+        for word in FORBIDDEN_WORDS:
+            if word.lower() in text_lower:
+                await message.reply("Пред\nЗапретка")
+                return
+        await message.answer(message.text)
 
 async def main():
     keep_alive()
@@ -39,5 +45,3 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
-
-
