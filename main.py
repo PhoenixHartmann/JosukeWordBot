@@ -1,4 +1,4 @@
-
+# ЙОУ
 import logging
 import asyncio
 from background import keep_alive
@@ -20,6 +20,7 @@ FORBIDDEN_WORDS = ['хуй', 'пример', 'плохое_слово3']
 
 from asyncio import sleep
 
+
 async def check_forbidden_words(message: types.Message):
     if message.text:
         text_lower = message.text.lower()
@@ -33,30 +34,34 @@ async def check_forbidden_words(message: types.Message):
                         animation = FSInputFile("josuke_angry.gif")
                         warning_msg = await message.answer_animation(
                             animation,
-                            caption="Пред\nЧто ты сказал про мою прическу?"
-                        )
+                            caption="Пред\nЧто ты сказал про мою прическу?")
                         await asyncio.sleep(10)
                         await warning_msg.delete()
                         return
                     except Exception as e:
                         if "retry after" in str(e).lower():
-                            retry_after = int(str(e).split("retry after")[1].split()[0])
+                            retry_after = int(
+                                str(e).split("retry after")[1].split()[0])
                             await sleep(retry_after)
                         else:
                             logging.error(f"Error sending message: {e}")
                             return
 
+
 @dp.message()
 async def check_message(message: types.Message):
     await check_forbidden_words(message)
+
 
 @dp.edited_message()
 async def check_edited_message(message: types.Message):
     await check_forbidden_words(message)
 
+
 async def main():
     keep_alive()
     await dp.start_polling(bot)
+
 
 if __name__ == '__main__':
     asyncio.run(main())
