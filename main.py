@@ -1,6 +1,7 @@
 
 import logging
 import asyncio
+import time
 from background import keep_alive
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command, CommandStart
@@ -54,9 +55,25 @@ async def check_message(message: types.Message):
 async def check_edited_message(message: types.Message):
     await check_forbidden_words(message)
 
+async def broadcast_time():
+    while True:
+        try:
+            current_time = time.strftime("%H:%M")
+            await bot.send_message(chat_id=-1001917572982, text=f"What time is it? {current_time}")
+            print(f"Sent time message: {current_time}")
+        except Exception as e:
+            print(f"Error sending time: {e}")
+        await asyncio.sleep(60)
+
 async def main():
     keep_alive()
-    await dp.start_polling(bot)
+    asyncio.create_task(broadcast_time())
+    while True:
+        try:
+            await dp.start_polling(bot)
+        except Exception as e:
+            print(f"Polling error: {e}")
+            await asyncio.sleep(5)
 
 if __name__ == '__main__':
     asyncio.run(main())
