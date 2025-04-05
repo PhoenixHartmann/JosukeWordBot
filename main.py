@@ -10,7 +10,7 @@ import ssl
 # Configuration
 API_TOKEN = '7963543492:AAEh2tnLbplI5bNN2CnLQYPhBpJ50mVf0_0'
 WEBHOOK_PATH = f'/webhook/{API_TOKEN}'
-APP_URL = f'https://{API_TOKEN}.repl.co'  # Replit URL
+APP_URL = 'https://' + input("Введите URL вашего Replit (например: my-bot.username.repl.co): ")
 WEBHOOK_URL = APP_URL + WEBHOOK_PATH
 
 # Configure logging
