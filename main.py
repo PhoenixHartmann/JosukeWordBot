@@ -1,7 +1,6 @@
 # ЙОУ
 import logging
 import asyncio
-from background import keep_alive
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command, CommandStart
 from aiogram.types import FSInputFile
@@ -46,22 +45,13 @@ async def check_forbidden_words(message: types.Message):
                         else:
                             logging.error(f"Error sending message: {e}")
                             return
-
-
 @dp.message()
 async def check_message(message: types.Message):
     await check_forbidden_words(message)
 
-
 @dp.edited_message()
 async def check_edited_message(message: types.Message):
     await check_forbidden_words(message)
-
-
-async def main():
-    keep_alive()
-    await dp.start_polling(bot)
-
 
 if __name__ == '__main__':
     asyncio.run(main())
